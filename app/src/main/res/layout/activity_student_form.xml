@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/activity_student_form_name"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:hint="Name"
+        android:importantForAutofill="no"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:id="@+id/activity_student_form_telephone"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:hint="Phone"
+        android:importantForAutofill="yes"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/activity_student_form_email"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:hint="Email"
+        android:importantForAutofill="yes"
+        android:inputType="textEmailAddress" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Save" />
+
+</LinearLayout>
