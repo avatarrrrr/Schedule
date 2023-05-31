@@ -1,13 +1,10 @@
 package br.com.alura.schedule.ui.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.alura.schedule.R;
 import br.com.alura.schedule.dao.StudentsDao;
@@ -48,5 +45,16 @@ public class StudentFormActivity extends AppCompatActivity {
         phoneEditText = findViewById(R.id.activity_student_form_telephone);
         emailEditText = findViewById(R.id.activity_student_form_email);
         saveButton = findViewById(R.id.activity_student_form_save);
+
+        isEdit();
+    }
+
+    private void isEdit() {
+        Student student = getIntent().getExtras().getParcelable(StudentListActivity.STUDENT_KEY);
+        if(student != null){
+            nameEditText.setText(student.getName());
+            phoneEditText.setText(student.getTelephone());
+            emailEditText.setText(student.getEmail());
+        }
     }
 }
