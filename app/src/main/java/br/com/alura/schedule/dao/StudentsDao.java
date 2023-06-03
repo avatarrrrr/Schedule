@@ -1,5 +1,7 @@
 package br.com.alura.schedule.dao;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +22,28 @@ public class StudentsDao {
     }
 
     public void edit(Student student) {
-        students.forEach(studentItem -> {
-            if(student.getIdentifier() == studentItem.getIdentifier()){
-                students.set(students.indexOf(studentItem), student);
+        Student studentFound = findStudentByID(student);
+        if (studentFound != null) {
+            students.set(students.indexOf(studentFound), student);
+        }
+    }
+
+    public void delete(Student student) {
+        Student studentFound = findStudentByID(student);
+        if (studentFound != null) {
+            students.remove(studentFound);
+        }
+    }
+
+    @Nullable
+    private static Student findStudentByID(Student student) {
+        Student studentFound = null;
+        for (Student studentItem : students) {
+            if (student.getIdentifier() == studentItem.getIdentifier()) {
+                studentFound = studentItem;
             }
-        });
+        }
+        return studentFound;
     }
 
 }
