@@ -8,7 +8,6 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -18,10 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import br.com.alura.schedule.R;
 import br.com.alura.schedule.dao.StudentsDao;
 import br.com.alura.schedule.models.Student;
+import br.com.alura.schedule.ui.adapter.StudentsListAdapter;
 
 public class StudentListActivity extends AppCompatActivity {
     final StudentsDao studentsDAO = new StudentsDao();
-    ArrayAdapter<Student> listViewAdapter = null;
+    private StudentsListAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class StudentListActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.activity_students_list_menu_delete) {
             final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            deleteItemOnList(listViewAdapter.getItem(menuInfo.position));
+            deleteItemOnList(adapter.getItem(menuInfo.position));
         }
         return super.onContextItemSelected(item);
     }
@@ -61,23 +61,26 @@ public class StudentListActivity extends AppCompatActivity {
     }
 
     private void updateAdapter() {
-        listViewAdapter.clear();
-        listViewAdapter.addAll(studentsDAO.getStudents());
+        adapter.clear();
+        adapter.addAll(studentsDAO.getStudents());
     }
 
     private void configList() {
         final ListView studentsView = findViewById(R.id.activity_students_list_listview);
 
-        listViewAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-
-        studentsView.setAdapter(listViewAdapter);
+        setAdapter(studentsView);
         setOnItemClickBehavior(studentsView);
         registerForContextMenu(studentsView);
     }
 
+    private void setAdapter(ListView studentsView) {
+        adapter = new StudentsListAdapter(this);
+        studentsView.setAdapter(adapter);
+    }
+
     private void deleteItemOnList(Student student) {
         studentsDAO.delete(student);
-        listViewAdapter.remove(student);
+        adapter.remove(student);
     }
 
     private void setOnItemClickBehavior(ListView studentsView) {
