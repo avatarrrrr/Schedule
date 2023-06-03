@@ -4,11 +4,14 @@ import static br.com.alura.schedule.ui.activity.ConstantsActivities.STUDENT_KEY;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,12 +26,27 @@ public class StudentListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_list);
+        setContentView(R.layout.activity_students_list);
         setTitle("Student list 👇🏾");
         buttonAddPressBehavior();
         configList();
         studentsDAO.save(new Student("Avatar", "+55 71 99733 3774", "avatar@gmail.com"));
         studentsDAO.save(new Student("Marcos", "+55 71 99733 3774", "marcosrios@gmail.com"));
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.activity_students_list_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.activity_students_list_menu_delete) {
+            final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            deleteItemOnList(listViewAdapter.getItem(menuInfo.position));
+        }
+        return super.onContextItemSelected(item);
     }
 
     private void buttonAddPressBehavior() {
@@ -54,16 +72,12 @@ public class StudentListActivity extends AppCompatActivity {
 
         studentsView.setAdapter(listViewAdapter);
         setOnItemClickBehavior(studentsView);
-        setOnLongItemClickBehavior(studentsView);
+        registerForContextMenu(studentsView);
     }
 
-    private void setOnLongItemClickBehavior(ListView studentsView) {
-        studentsView.setOnItemLongClickListener((AdapterView<?> parent, View view, int position, long id) -> {
-            final Student student = (Student) parent.getItemAtPosition(position);
-            studentsDAO.delete(student);
-            listViewAdapter.remove(student);
-            return true;
-        });
+    private void deleteItemOnList(Student student) {
+        studentsDAO.delete(student);
+        listViewAdapter.remove(student);
     }
 
     private void setOnItemClickBehavior(ListView studentsView) {
