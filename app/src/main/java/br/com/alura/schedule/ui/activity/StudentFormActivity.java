@@ -4,9 +4,11 @@ import static br.com.alura.schedule.ui.activity.ConstantsActivities.STUDENT_KEY;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.alura.schedule.R;
@@ -19,7 +21,6 @@ public class StudentFormActivity extends AppCompatActivity {
     private EditText nameEditText;
     private EditText phoneEditText;
     private EditText emailEditText;
-    private Button saveButton;
 
 
     @Override
@@ -27,19 +28,30 @@ public class StudentFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_form);
         initializeViews();
-        saveButtonPressBehavior();
     }
 
-    private void saveButtonPressBehavior() {
-        saveButton.setOnClickListener(v -> {
-            fillStudent();
-            if (student.hasValidIdentifier()) {
-                studentsDAO.edit(student);
-            } else {
-                studentsDAO.save(student);
-            }
-            finish();
-        });
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_student_form_menu_options, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.activity_student_form_menu_save){
+            save();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void save() {
+        fillStudent();
+        if (student.hasValidIdentifier()) {
+            studentsDAO.edit(student);
+        } else {
+            studentsDAO.save(student);
+        }
+        finish();
     }
 
     private void fillStudent() {
@@ -52,7 +64,6 @@ public class StudentFormActivity extends AppCompatActivity {
         nameEditText = findViewById(R.id.activity_student_form_name);
         phoneEditText = findViewById(R.id.activity_student_form_telephone);
         emailEditText = findViewById(R.id.activity_student_form_email);
-        saveButton = findViewById(R.id.activity_student_form_save);
 
         isEdit();
     }
