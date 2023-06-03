@@ -6,9 +6,10 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class Student implements Parcelable {
-    private final String name;
-    private final String telephone;
-    private final String email;
+    private int identifier = 0;
+    private  String name;
+    private  String telephone;
+    private  String email;
 
     public Student(String name, String telephone, String email) {
         this.name = name;
@@ -17,6 +18,7 @@ public class Student implements Parcelable {
     }
 
     private Student(Parcel parcel) {
+        this.identifier = parcel.readInt();
         this.name = parcel.readString();
         this.telephone = parcel.readString();
         this.email = parcel.readString();
@@ -34,6 +36,12 @@ public class Student implements Parcelable {
         }
     };
 
+    public Student() {
+        this.name = "";
+        this.telephone = "";
+        this.email = "";
+    }
+
     public String getName() {
         return name;
     }
@@ -44,6 +52,26 @@ public class Student implements Parcelable {
 
     public String getEmail() {
         return email;
+    }
+
+    public int getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(int identifier) {
+        this.identifier = identifier;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @NonNull
@@ -59,8 +87,13 @@ public class Student implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(identifier);
         dest.writeString(name);
         dest.writeString(telephone);
         dest.writeString(email);
+    }
+
+    public boolean hasValidIdentifier() {
+        return identifier > 0;
     }
 }

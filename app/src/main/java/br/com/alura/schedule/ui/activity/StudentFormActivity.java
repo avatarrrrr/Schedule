@@ -1,5 +1,8 @@
 package br.com.alura.schedule.ui.activity;
 
+import static br.com.alura.schedule.ui.activity.ConstantsActivities.STUDENT_KEY;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +14,7 @@ import br.com.alura.schedule.dao.StudentsDao;
 import br.com.alura.schedule.models.Student;
 
 public class StudentFormActivity extends AppCompatActivity {
+    private Student student = null;
     private final StudentsDao studentsDAO = new StudentsDao();
     private EditText nameEditText;
     private EditText phoneEditText;
@@ -22,22 +26,26 @@ public class StudentFormActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_form);
-        setTitle("New Student");
-
         initializeViews();
         saveButtonPressBehavior();
     }
 
     private void saveButtonPressBehavior() {
         saveButton.setOnClickListener(v -> {
-            createNewStudent();
+            fillStudent();
+            if (student.hasValidIdentifier()) {
+                studentsDAO.edit(student);
+            } else {
+                studentsDAO.save(student);
+            }
             finish();
         });
     }
 
-    private void createNewStudent() {
-        Student student = new Student(nameEditText.getText().toString(), phoneEditText.getText().toString(), emailEditText.getText().toString());
-        studentsDAO.save(student);
+    private void fillStudent() {
+        student.setName(nameEditText.getText().toString());
+        student.setTelephone(phoneEditText.getText().toString());
+        student.setEmail(emailEditText.getText().toString());
     }
 
     private void initializeViews() {
@@ -50,11 +58,17 @@ public class StudentFormActivity extends AppCompatActivity {
     }
 
     private void isEdit() {
-        Student student = getIntent().getExtras().getParcelable(StudentListActivity.STUDENT_KEY);
-        if(student != null){
+        Intent intent = getIntent();
+
+        if (intent.hasExtra(STUDENT_KEY)) {
+            setTitle("Edit Student");
+            student = intent.getExtras().getParcelable(STUDENT_KEY);
             nameEditText.setText(student.getName());
             phoneEditText.setText(student.getTelephone());
             emailEditText.setText(student.getEmail());
+        } else {
+            setTitle("New Student");
+            student = new Student();
         }
     }
 }
