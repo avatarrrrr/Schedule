@@ -40,24 +40,27 @@ public class StudentsListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        @SuppressLint("ViewHolder") final View itemStudentLayout = LayoutInflater.from(context).inflate(R.layout.item_student, parent, false);
+        @SuppressLint("ViewHolder") final View itemStudentLayout = createView(parent);
+        bindStudentOnView(position, itemStudentLayout);
+
+        return itemStudentLayout;
+    }
+
+    private void bindStudentOnView(int position, View itemStudentLayout) {
         final TextView nameTextView = itemStudentLayout.findViewById(R.id.item_student_name);
         final TextView telephoneTextView = itemStudentLayout.findViewById(R.id.item_student_telephone);
         final Student student = this.students.get(position);
 
         nameTextView.setText(student.getName());
         telephoneTextView.setText(student.getTelephone());
-
-        return itemStudentLayout;
-
     }
 
-    public void clear() {
+    private View createView(ViewGroup parent) {
+        return LayoutInflater.from(context).inflate(R.layout.item_student, parent, false);
+    }
+
+    public void update(List<Student> studentsToAdd) {
         this.students.clear();
-        notifyDataSetChanged();
-    }
-
-    public void addAll(List<Student> studentsToAdd) {
         this.students.addAll(studentsToAdd);
         notifyDataSetChanged();
     }

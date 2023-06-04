@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.alura.schedule.R;
@@ -30,8 +31,6 @@ public class StudentListActivity extends AppCompatActivity {
         setTitle("Student list 👇🏾");
         buttonAddPressBehavior();
         configList();
-        studentsDAO.save(new Student("Avatar", "+55 71 99733 3774", "avatar@gmail.com"));
-        studentsDAO.save(new Student("Marcos", "+55 71 99733 3774", "marcosrios@gmail.com"));
     }
 
     @Override
@@ -44,9 +43,18 @@ public class StudentListActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.activity_students_list_menu_delete) {
             final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            deleteItemOnList(adapter.getItem(menuInfo.position));
+            confirmDeleteDialog(menuInfo);
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void confirmDeleteDialog(final AdapterView.AdapterContextMenuInfo menuInfo) {
+        new AlertDialog.Builder(StudentListActivity.this)
+                .setTitle("Delete student")
+                .setMessage("You are sure?")
+                .setNegativeButton("No", null)
+                .setPositiveButton("Yes", (dialog, which) -> deleteItemOnList(adapter.getItem(menuInfo.position)))
+                .show();
     }
 
     private void buttonAddPressBehavior() {
@@ -61,8 +69,7 @@ public class StudentListActivity extends AppCompatActivity {
     }
 
     private void updateAdapter() {
-        adapter.clear();
-        adapter.addAll(studentsDAO.getStudents());
+        adapter.update(studentsDAO.getStudents());
     }
 
     private void configList() {
