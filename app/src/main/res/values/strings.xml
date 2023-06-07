@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Schedule</string>
     <string name="title_activity_student_form">StudentFormActivity</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="save_student">Save student</string>
+    <string name="add_new_student">Add new student button</string>
+    <string name="delete">Delete</string>
 </resources>

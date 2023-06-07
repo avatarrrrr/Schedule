@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_margin="8dp"
-            android:hint="Name"
+            android:hint="@string/name"
             android:autofillHints="name"
             android:importantForAutofill="no"
             android:inputType="textCapWords" />
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_margin="8dp"
-            android:hint="Phone"
+            android:hint="@string/phone"
             android:autofillHints="phone"
             android:importantForAutofill="yes"
             android:inputType="phone" />
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_margin="8dp"
-            android:hint="Email"
+            android:hint="@string/email"
             android:autofillHints="emailAddress"
             android:importantForAutofill="yes"
             android:inputType="textEmailAddress" />

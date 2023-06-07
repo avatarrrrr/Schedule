@@ -12,22 +12,20 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.alura.schedule.R;
-import br.com.alura.schedule.dao.StudentsDao;
 import br.com.alura.schedule.models.Student;
-import br.com.alura.schedule.ui.adapter.StudentsListAdapter;
+import br.com.alura.schedule.ui.StudentsListView;
 
 public class StudentListActivity extends AppCompatActivity {
-    final StudentsDao studentsDAO = new StudentsDao();
-    private StudentsListAdapter adapter;
+    private StudentsListView studentsListView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students_list);
+        studentsListView = new StudentsListView(this);
         setTitle("Student list 👇🏾");
         buttonAddPressBehavior();
         configList();
@@ -43,18 +41,9 @@ public class StudentListActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.activity_students_list_menu_delete) {
             final AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            confirmDeleteDialog(menuInfo);
+            studentsListView.confirmDeleteDialog(menuInfo);
         }
         return super.onContextItemSelected(item);
-    }
-
-    private void confirmDeleteDialog(final AdapterView.AdapterContextMenuInfo menuInfo) {
-        new AlertDialog.Builder(StudentListActivity.this)
-                .setTitle("Delete student")
-                .setMessage("You are sure?")
-                .setNegativeButton("No", null)
-                .setPositiveButton("Yes", (dialog, which) -> deleteItemOnList(adapter.getItem(menuInfo.position)))
-                .show();
     }
 
     private void buttonAddPressBehavior() {
@@ -65,29 +54,15 @@ public class StudentListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        updateAdapter();
-    }
-
-    private void updateAdapter() {
-        adapter.update(studentsDAO.getStudents());
+        studentsListView.updateAdapter();
     }
 
     private void configList() {
         final ListView studentsView = findViewById(R.id.activity_students_list_listview);
 
-        setAdapter(studentsView);
+        studentsListView.setAdapter(studentsView);
         setOnItemClickBehavior(studentsView);
         registerForContextMenu(studentsView);
-    }
-
-    private void setAdapter(ListView studentsView) {
-        adapter = new StudentsListAdapter(this);
-        studentsView.setAdapter(adapter);
-    }
-
-    private void deleteItemOnList(Student student) {
-        studentsDAO.delete(student);
-        adapter.remove(student);
     }
 
     private void setOnItemClickBehavior(ListView studentsView) {

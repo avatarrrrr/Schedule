@@ -17,7 +17,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:contentDescription="Add new student button"
+        android:contentDescription="@string/add_new_student"
         android:focusable="true"
         android:src="@drawable/ic_action_new_student" />
 

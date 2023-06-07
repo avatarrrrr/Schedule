@@ -1,18 +1,17 @@
 package br.com.alura.schedule.ui.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.alura.schedule.R;
 import br.com.alura.schedule.models.Student;
+import br.com.alura.schedule.ui.utils.ViewHolder;
 
 public class StudentsListAdapter extends BaseAdapter {
 
@@ -40,20 +39,29 @@ public class StudentsListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        @SuppressLint("ViewHolder") final View itemStudentLayout = createView(parent);
-        bindStudentOnView(position, itemStudentLayout);
+        View itemStudentLayout;
+        ViewHolder holder;
+
+        if (convertView == null) {
+            itemStudentLayout = createView(parent);
+            holder = new ViewHolder(itemStudentLayout);
+            itemStudentLayout.setTag(holder);
+        } else {
+            itemStudentLayout = convertView;
+            holder = (ViewHolder) itemStudentLayout.getTag();
+        }
+
+        assignStudentOnView(position, holder);
 
         return itemStudentLayout;
     }
 
-    private void bindStudentOnView(int position, View itemStudentLayout) {
-        final TextView nameTextView = itemStudentLayout.findViewById(R.id.item_student_name);
-        final TextView telephoneTextView = itemStudentLayout.findViewById(R.id.item_student_telephone);
+    private void assignStudentOnView(int position, ViewHolder holder) {
         final Student student = this.students.get(position);
-
-        nameTextView.setText(student.getName());
-        telephoneTextView.setText(student.getTelephone());
+        holder.name.setText(student.getName());
+        holder.telephone.setText(student.getTelephone());
     }
+
 
     private View createView(ViewGroup parent) {
         return LayoutInflater.from(context).inflate(R.layout.item_student, parent, false);
