@@ -1,4 +1,4 @@
-package br.com.alura.schedule.ui;
+package br.com.alura.schedule.ui.activity.controller;
 
 import android.content.Context;
 import android.widget.AdapterView;
@@ -7,18 +7,20 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
-import br.com.alura.schedule.dao.StudentsDao;
+import br.com.alura.schedule.database.dao.RoomStudentDAO;
 import br.com.alura.schedule.models.Student;
 import br.com.alura.schedule.ui.adapter.StudentsListAdapter;
+import br.com.alura.schedule.utils.RoomUtils;
 
-public class StudentsListView {
-    final private StudentsDao studentsDAO = new StudentsDao();
+public class StudentsListActivityController {
+    final private RoomStudentDAO studentsDAO;
     final private StudentsListAdapter adapter;
     final private Context context;
 
-    public StudentsListView(Context context) {
+    public StudentsListActivityController(Context context) {
         this.context = context;
         this.adapter = new StudentsListAdapter(this.context);
+        this.studentsDAO = RoomUtils.getDAO(this.context);
     }
 
     public void confirmDeleteDialog(final AdapterView.AdapterContextMenuInfo menuInfo) {

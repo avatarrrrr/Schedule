@@ -11,7 +11,7 @@ import java.util.List;
 
 import br.com.alura.schedule.R;
 import br.com.alura.schedule.models.Student;
-import br.com.alura.schedule.ui.utils.ViewHolder;
+import br.com.alura.schedule.ui.adapter.viewholders.ViewHolder;
 
 public class StudentsListAdapter extends BaseAdapter {
 

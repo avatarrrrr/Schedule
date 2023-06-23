@@ -4,19 +4,26 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
+@Entity
 public class Student implements Parcelable {
+    @PrimaryKey(autoGenerate = true)
     private int identifier = 0;
-    private  String name;
-    private  String telephone;
-    private  String email;
+    private String name;
+    private String telephone;
+    private String email;
 
+    @Ignore
     public Student(String name, String telephone, String email) {
         this.name = name;
         this.telephone = telephone;
         this.email = email;
     }
 
+    @Ignore
     private Student(Parcel parcel) {
         this.identifier = parcel.readInt();
         this.name = parcel.readString();
@@ -25,7 +32,7 @@ public class Student implements Parcelable {
     }
 
     public static final Parcelable.Creator<Student>
-        CREATOR = new Parcelable.Creator<Student>() {
+            CREATOR = new Parcelable.Creator<Student>() {
 
         public Student createFromParcel(Parcel in) {
             return new Student(in);
@@ -37,9 +44,6 @@ public class Student implements Parcelable {
     };
 
     public Student() {
-        this.name = "";
-        this.telephone = "";
-        this.email = "";
     }
 
     public String getName() {

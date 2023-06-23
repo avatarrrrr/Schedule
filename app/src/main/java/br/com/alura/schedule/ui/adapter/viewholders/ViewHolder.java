@@ -1,4 +1,4 @@
-package br.com.alura.schedule.ui.utils;
+package br.com.alura.schedule.ui.adapter.viewholders;
 
 import android.view.View;
 import android.widget.TextView;

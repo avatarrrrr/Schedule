@@ -7,4 +7,5 @@
     <string name="save_student">Save student</string>
     <string name="add_new_student">Add new student button</string>
     <string name="delete">Delete</string>
+    <string name="students_list_activity_title">Student list 👇🏾</string>
 </resources>
