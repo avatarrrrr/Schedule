@@ -58,7 +58,7 @@ public class StudentsListAdapter extends BaseAdapter {
 
     private void assignStudentOnView(int position, ViewHolder holder) {
         final Student student = this.students.get(position);
-        holder.name.setText(student.getName());
+        holder.name.setText(student.getFullName());
         holder.telephone.setText(student.getTelephone());
     }
 

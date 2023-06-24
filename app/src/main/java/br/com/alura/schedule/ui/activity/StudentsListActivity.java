@@ -1,6 +1,6 @@
 package br.com.alura.schedule.ui.activity;
 
-import static br.com.alura.schedule.ui.activity.ConstantsActivities.STUDENT_KEY;
+import static br.com.alura.schedule.ui.activity.constants.ConstantsActivities.STUDENT_KEY;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import br.com.alura.schedule.R;
 import br.com.alura.schedule.models.Student;
 import br.com.alura.schedule.ui.activity.controller.StudentsListActivityController;
 
-public class StudentListActivity extends AppCompatActivity {
+public class StudentsListActivity extends AppCompatActivity {
     private StudentsListActivityController studentsListActivityController;
 
     @Override
@@ -48,7 +48,7 @@ public class StudentListActivity extends AppCompatActivity {
 
     private void buttonAddPressBehavior() {
         final View button = findViewById(R.id.activity_students_fab_add_student);
-        button.setOnClickListener(v -> startActivity(new Intent(StudentListActivity.this, StudentFormActivity.class)));
+        button.setOnClickListener(v -> startActivity(new Intent(StudentsListActivity.this, NewOrEditStudentFormActivity.class)));
     }
 
     @Override
@@ -73,7 +73,7 @@ public class StudentListActivity extends AppCompatActivity {
     }
 
     private void goToFormsOnEditMode(Student student) {
-        Intent intentForm = new Intent(this, StudentFormActivity.class);
+        Intent intentForm = new Intent(this, NewOrEditStudentFormActivity.class);
         intentForm.putExtra(STUDENT_KEY, student);
         startActivity(intentForm);
     }

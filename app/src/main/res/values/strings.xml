@@ -8,4 +8,7 @@
     <string name="add_new_student">Add new student button</string>
     <string name="delete">Delete</string>
     <string name="students_list_activity_title">Student list 👇🏾</string>
+    <string name="activity_student_form_surname_hint">Surname</string>
+    <string name="new_or_edit_student_form_activity_title_edit">Edit Student</string>
+    <string name="new_or_edit_student_form_activity_title_new">New Student</string>
 </resources>

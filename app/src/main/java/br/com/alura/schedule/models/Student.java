@@ -13,12 +13,15 @@ public class Student implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int identifier = 0;
     private String name;
+
+    private String surname;
     private String telephone;
     private String email;
 
     @Ignore
-    public Student(String name, String telephone, String email) {
+    public Student(String name, String surname, String telephone, String email) {
         this.name = name;
+        this.surname = surname;
         this.telephone = telephone;
         this.email = email;
     }
@@ -27,6 +30,7 @@ public class Student implements Parcelable {
     private Student(Parcel parcel) {
         this.identifier = parcel.readInt();
         this.name = parcel.readString();
+        this.surname = parcel.readString();
         this.telephone = parcel.readString();
         this.email = parcel.readString();
     }
@@ -44,6 +48,18 @@ public class Student implements Parcelable {
     };
 
     public Student() {
+    }
+
+    public String getFullName() {
+        return this.name + " " + this.surname;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getName() {
@@ -93,6 +109,7 @@ public class Student implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeInt(identifier);
         dest.writeString(name);
+        dest.writeString(surname);
         dest.writeString(telephone);
         dest.writeString(email);
     }

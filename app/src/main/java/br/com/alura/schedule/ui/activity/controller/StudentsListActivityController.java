@@ -7,10 +7,10 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import br.com.alura.schedule.database.ScheduleDatabase;
 import br.com.alura.schedule.database.dao.RoomStudentDAO;
 import br.com.alura.schedule.models.Student;
 import br.com.alura.schedule.ui.adapter.StudentsListAdapter;
-import br.com.alura.schedule.utils.RoomUtils;
 
 public class StudentsListActivityController {
     final private RoomStudentDAO studentsDAO;
@@ -20,7 +20,7 @@ public class StudentsListActivityController {
     public StudentsListActivityController(Context context) {
         this.context = context;
         this.adapter = new StudentsListAdapter(this.context);
-        this.studentsDAO = RoomUtils.getDAO(this.context);
+        this.studentsDAO = ScheduleDatabase.getInstance(this.context).getDAO();
     }
 
     public void confirmDeleteDialog(final AdapterView.AdapterContextMenuInfo menuInfo) {

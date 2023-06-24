@@ -1,6 +1,6 @@
 package br.com.alura.schedule.ui.activity;
 
-import static br.com.alura.schedule.ui.activity.ConstantsActivities.STUDENT_KEY;
+import static br.com.alura.schedule.ui.activity.constants.ConstantsActivities.STUDENT_KEY;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,21 +12,25 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.alura.schedule.R;
-import br.com.alura.schedule.dao.StudentsDao;
+import br.com.alura.schedule.database.ScheduleDatabase;
+import br.com.alura.schedule.database.dao.RoomStudentDAO;
 import br.com.alura.schedule.models.Student;
 
-public class StudentFormActivity extends AppCompatActivity {
+public class NewOrEditStudentFormActivity extends AppCompatActivity {
     private Student student = null;
-    private final StudentsDao studentsDAO = new StudentsDao();
+    private RoomStudentDAO dao;
     private EditText nameEditText;
     private EditText phoneEditText;
     private EditText emailEditText;
+
+    private EditText surnameEditText;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_form);
+        setContentView(R.layout.activity_new_or_edit_student_form);
+        dao = ScheduleDatabase.getInstance(this).getDAO();
         initializeViews();
     }
 
@@ -38,7 +42,7 @@ public class StudentFormActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.activity_student_form_menu_save){
+        if (item.getItemId() == R.id.activity_student_form_menu_save) {
             save();
         }
         return super.onOptionsItemSelected(item);
@@ -47,9 +51,9 @@ public class StudentFormActivity extends AppCompatActivity {
     private void save() {
         fillStudent();
         if (student.hasValidIdentifier()) {
-            studentsDAO.edit(student);
+            dao.edit(student);
         } else {
-            studentsDAO.save(student);
+            dao.save(student);
         }
         finish();
     }
@@ -58,12 +62,14 @@ public class StudentFormActivity extends AppCompatActivity {
         student.setName(nameEditText.getText().toString());
         student.setTelephone(phoneEditText.getText().toString());
         student.setEmail(emailEditText.getText().toString());
+        student.setSurname(surnameEditText.getText().toString());
     }
 
     private void initializeViews() {
         nameEditText = findViewById(R.id.activity_student_form_name);
         phoneEditText = findViewById(R.id.activity_student_form_telephone);
         emailEditText = findViewById(R.id.activity_student_form_email);
+        surnameEditText = findViewById(R.id.activity_student_form_surname);
 
         isEdit();
     }
@@ -72,13 +78,14 @@ public class StudentFormActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent.hasExtra(STUDENT_KEY)) {
-            setTitle("Edit Student");
+            setTitle(getString(R.string.new_or_edit_student_form_activity_title_edit));
             student = intent.getExtras().getParcelable(STUDENT_KEY);
             nameEditText.setText(student.getName());
             phoneEditText.setText(student.getTelephone());
             emailEditText.setText(student.getEmail());
+            surnameEditText.setText(student.getSurname());
         } else {
-            setTitle("New Student");
+            setTitle(getString(R.string.new_or_edit_student_form_activity_title_new));
             student = new Student();
         }
     }
