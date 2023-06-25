@@ -8,6 +8,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.util.Calendar;
+
 @Entity
 public class Student implements Parcelable {
     @PrimaryKey(autoGenerate = true)
@@ -15,6 +17,7 @@ public class Student implements Parcelable {
     private String name;
     private String telephone;
     private String email;
+    private Calendar createDate = Calendar.getInstance();
 
     @Ignore
     public Student(String name, String telephone, String email) {
@@ -29,6 +32,7 @@ public class Student implements Parcelable {
         this.name = parcel.readString();
         this.telephone = parcel.readString();
         this.email = parcel.readString();
+        this.createDate = (Calendar) parcel.readValue(Calendar.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<Student>
@@ -44,6 +48,14 @@ public class Student implements Parcelable {
     };
 
     public Student() {
+    }
+
+    public Calendar getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Calendar createDate) {
+        this.createDate = createDate;
     }
 
     public String getName() {
@@ -95,6 +107,7 @@ public class Student implements Parcelable {
         dest.writeString(name);
         dest.writeString(telephone);
         dest.writeString(email);
+        dest.writeValue(createDate);
     }
 
     public boolean hasValidIdentifier() {
