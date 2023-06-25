@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase;
 
 import br.com.alura.schedule.R;
 import br.com.alura.schedule.database.dao.RoomStudentDAO;
+import br.com.alura.schedule.database.migrations.Migrations;
 import br.com.alura.schedule.models.Student;
 
 @Database(version = 2, entities = {Student.class}, exportSchema = false)
@@ -18,7 +19,10 @@ public abstract class ScheduleDatabase extends RoomDatabase {
 
     public static ScheduleDatabase getInstance(Context context) {
         if (instance == null) {
-            instance = Room.databaseBuilder(context, ScheduleDatabase.class, context.getString(R.string.app_name) + ".db").allowMainThreadQueries().build();
+            Builder<ScheduleDatabase> scheduleDatabaseBuilder = Room.databaseBuilder(context, ScheduleDatabase.class, context.getString(R.string.app_name) + ".db");
+            scheduleDatabaseBuilder.allowMainThreadQueries();
+            scheduleDatabaseBuilder.addMigrations(Migrations.all);
+            instance = scheduleDatabaseBuilder.build();
         }
 
         return instance;

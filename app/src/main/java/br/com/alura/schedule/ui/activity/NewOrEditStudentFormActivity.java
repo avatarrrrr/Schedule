@@ -23,8 +23,6 @@ public class NewOrEditStudentFormActivity extends AppCompatActivity {
     private EditText phoneEditText;
     private EditText emailEditText;
 
-    private EditText surnameEditText;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +60,12 @@ public class NewOrEditStudentFormActivity extends AppCompatActivity {
         student.setName(nameEditText.getText().toString());
         student.setTelephone(phoneEditText.getText().toString());
         student.setEmail(emailEditText.getText().toString());
-        student.setSurname(surnameEditText.getText().toString());
     }
 
     private void initializeViews() {
         nameEditText = findViewById(R.id.activity_student_form_name);
         phoneEditText = findViewById(R.id.activity_student_form_telephone);
         emailEditText = findViewById(R.id.activity_student_form_email);
-        surnameEditText = findViewById(R.id.activity_student_form_surname);
 
         isEdit();
     }
@@ -83,7 +79,6 @@ public class NewOrEditStudentFormActivity extends AppCompatActivity {
             nameEditText.setText(student.getName());
             phoneEditText.setText(student.getTelephone());
             emailEditText.setText(student.getEmail());
-            surnameEditText.setText(student.getSurname());
         } else {
             setTitle(getString(R.string.new_or_edit_student_form_activity_title_new));
             student = new Student();

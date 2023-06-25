@@ -21,16 +21,6 @@
             android:inputType="textCapWords" />
 
         <EditText
-            android:id="@+id/activity_student_form_surname"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_margin="8dp"
-            android:autofillHints="name"
-            android:hint="@string/activity_student_form_surname_hint"
-            android:importantForAutofill="no"
-            android:inputType="textCapWords" />
-
-        <EditText
             android:id="@+id/activity_student_form_telephone"
             android:layout_width="match_parent"
             android:layout_height="48dp"
