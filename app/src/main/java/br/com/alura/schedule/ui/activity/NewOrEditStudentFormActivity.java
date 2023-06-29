@@ -20,8 +20,9 @@ public class NewOrEditStudentFormActivity extends AppCompatActivity {
     private Student student = null;
     private RoomStudentDAO dao;
     private EditText nameEditText;
-    private EditText phoneEditText;
+    private EditText landlineEditText;
     private EditText emailEditText;
+    private EditText cellPhoneEditText;
 
 
     @Override
@@ -46,6 +47,15 @@ public class NewOrEditStudentFormActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void initializeViews() {
+        nameEditText = findViewById(R.id.activity_student_form_name);
+        landlineEditText = findViewById(R.id.activity_student_form_landline);
+        emailEditText = findViewById(R.id.activity_student_form_email);
+        cellPhoneEditText = findViewById(R.id.activity_student_form_cell_phone);
+
+        isEdit();
+    }
+
     private void save() {
         fillStudent();
         if (student.hasValidIdentifier()) {
@@ -58,16 +68,9 @@ public class NewOrEditStudentFormActivity extends AppCompatActivity {
 
     private void fillStudent() {
         student.setName(nameEditText.getText().toString());
-        student.setTelephone(phoneEditText.getText().toString());
+//        student.setLandline(landlineEditText.getText().toString());
         student.setEmail(emailEditText.getText().toString());
-    }
-
-    private void initializeViews() {
-        nameEditText = findViewById(R.id.activity_student_form_name);
-        phoneEditText = findViewById(R.id.activity_student_form_telephone);
-        emailEditText = findViewById(R.id.activity_student_form_email);
-
-        isEdit();
+//        student.setCellPhone(cellPhoneEditText.getText().toString());
     }
 
     private void isEdit() {
@@ -77,8 +80,9 @@ public class NewOrEditStudentFormActivity extends AppCompatActivity {
             setTitle(getString(R.string.new_or_edit_student_form_activity_title_edit));
             student = intent.getExtras().getParcelable(STUDENT_KEY);
             nameEditText.setText(student.getName());
-            phoneEditText.setText(student.getTelephone());
+//            landlineEditText.setText(student.getLandline());
             emailEditText.setText(student.getEmail());
+//            cellPhoneEditText.setText(student.getCellPhone());
         } else {
             setTitle(getString(R.string.new_or_edit_student_form_activity_title_new));
             student = new Student();

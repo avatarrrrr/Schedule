@@ -21,12 +21,22 @@
             android:inputType="textCapWords" />
 
         <EditText
-            android:id="@+id/activity_student_form_telephone"
+            android:id="@+id/activity_student_form_landline"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_margin="8dp"
             android:autofillHints="phone"
-            android:hint="@string/phone"
+            android:hint="@string/activity_new_or_edit_student_form_landline_hint"
+            android:importantForAutofill="yes"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/activity_student_form_cell_phone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:autofillHints="phone"
+            android:hint="@string/activity_new_or_edit_student_form_cell_phone_hint"
             android:importantForAutofill="yes"
             android:inputType="phone" />
 

@@ -9,12 +9,14 @@ import androidx.room.TypeConverters;
 
 import br.com.alura.schedule.R;
 import br.com.alura.schedule.database.converters.CalendarConverter;
+import br.com.alura.schedule.database.converters.TelephoneTypeConverter;
 import br.com.alura.schedule.database.dao.RoomStudentDAO;
 import br.com.alura.schedule.database.migrations.Migrations;
 import br.com.alura.schedule.models.Student;
+import br.com.alura.schedule.models.Telephone;
 
-@Database(version = 4, entities = {Student.class}, exportSchema = false)
-@TypeConverters({CalendarConverter.class})
+@Database(version = 5, entities = {Student.class, Telephone.class}, exportSchema = false)
+@TypeConverters({CalendarConverter.class, TelephoneTypeConverter.class})
 public abstract class ScheduleDatabase extends RoomDatabase {
     private static ScheduleDatabase instance;
 

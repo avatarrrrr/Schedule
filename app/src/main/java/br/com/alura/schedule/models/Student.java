@@ -15,22 +15,13 @@ public class Student implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int identifier = 0;
     private String name;
-    private String telephone;
     private String email;
     private Calendar createDate = Calendar.getInstance();
-
-    @Ignore
-    public Student(String name, String telephone, String email) {
-        this.name = name;
-        this.telephone = telephone;
-        this.email = email;
-    }
 
     @Ignore
     private Student(Parcel parcel) {
         this.identifier = parcel.readInt();
         this.name = parcel.readString();
-        this.telephone = parcel.readString();
         this.email = parcel.readString();
         this.createDate = (Calendar) parcel.readValue(Calendar.class.getClassLoader());
     }
@@ -50,6 +41,7 @@ public class Student implements Parcelable {
     public Student() {
     }
 
+
     public Calendar getCreateDate() {
         return createDate;
     }
@@ -62,9 +54,6 @@ public class Student implements Parcelable {
         return name;
     }
 
-    public String getTelephone() {
-        return telephone;
-    }
 
     public String getEmail() {
         return email;
@@ -82,9 +71,6 @@ public class Student implements Parcelable {
         this.name = name;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
 
     public void setEmail(String email) {
         this.email = email;
@@ -105,7 +91,6 @@ public class Student implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeInt(identifier);
         dest.writeString(name);
-        dest.writeString(telephone);
         dest.writeString(email);
         dest.writeValue(createDate);
     }

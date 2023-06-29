@@ -2,7 +2,6 @@
     <string name="app_name">Schedule</string>
     <string name="title_activity_student_form">StudentFormActivity</string>
     <string name="name">Name</string>
-    <string name="phone">Phone</string>
     <string name="email">Email</string>
     <string name="save_student">Save student</string>
     <string name="add_new_student">Add new student button</string>
@@ -10,4 +9,6 @@
     <string name="students_list_activity_title">Student list 👇🏾</string>
     <string name="new_or_edit_student_form_activity_title_edit">Edit Student</string>
     <string name="new_or_edit_student_form_activity_title_new">New Student</string>
+    <string name="activity_new_or_edit_student_form_landline_hint">Landline</string>
+    <string name="activity_new_or_edit_student_form_cell_phone_hint">Cell phone</string>
 </resources>
