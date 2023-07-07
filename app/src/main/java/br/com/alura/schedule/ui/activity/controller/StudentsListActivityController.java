@@ -20,7 +20,7 @@ public class StudentsListActivityController {
     public StudentsListActivityController(Context context) {
         this.context = context;
         this.adapter = new StudentsListAdapter(this.context);
-        this.studentsDAO = ScheduleDatabase.getInstance(this.context).getDAO();
+        this.studentsDAO = ScheduleDatabase.getInstance(this.context).getStudentDAO();
     }
 
     public void confirmDeleteDialog(final AdapterView.AdapterContextMenuInfo menuInfo) {

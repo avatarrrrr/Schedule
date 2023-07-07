@@ -11,16 +11,15 @@ import br.com.alura.schedule.R;
 import br.com.alura.schedule.database.converters.CalendarConverter;
 import br.com.alura.schedule.database.converters.TelephoneTypeConverter;
 import br.com.alura.schedule.database.dao.RoomStudentDAO;
+import br.com.alura.schedule.database.dao.RoomTelephoneDAO;
 import br.com.alura.schedule.database.migrations.Migrations;
 import br.com.alura.schedule.models.Student;
 import br.com.alura.schedule.models.Telephone;
 
-@Database(version = 5, entities = {Student.class, Telephone.class}, exportSchema = false)
+@Database(version = 6, entities = {Student.class, Telephone.class}, exportSchema = false)
 @TypeConverters({CalendarConverter.class, TelephoneTypeConverter.class})
 public abstract class ScheduleDatabase extends RoomDatabase {
     private static ScheduleDatabase instance;
-
-    public abstract RoomStudentDAO getDAO();
 
     public static ScheduleDatabase getInstance(Context context) {
         if (instance == null) {
@@ -32,4 +31,8 @@ public abstract class ScheduleDatabase extends RoomDatabase {
 
         return instance;
     }
+
+    public abstract RoomStudentDAO getStudentDAO();
+
+    public abstract RoomTelephoneDAO getTelephoneDAO();
 }

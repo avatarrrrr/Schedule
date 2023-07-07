@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.alura.schedule.R;
+import br.com.alura.schedule.database.ScheduleDatabase;
+import br.com.alura.schedule.database.dao.RoomTelephoneDAO;
 import br.com.alura.schedule.models.Student;
 import br.com.alura.schedule.ui.adapter.viewholders.ViewHolder;
 
@@ -18,8 +20,11 @@ public class StudentsListAdapter extends BaseAdapter {
     final List<Student> students = new ArrayList<>();
     final private Context context;
 
+    final RoomTelephoneDAO telephoneDAO;
+
     public StudentsListAdapter(Context context) {
         this.context = context;
+        telephoneDAO = ScheduleDatabase.getInstance(this.context).getTelephoneDAO();
     }
 
     @Override
@@ -59,7 +64,7 @@ public class StudentsListAdapter extends BaseAdapter {
     private void assignStudentOnView(int position, ViewHolder holder) {
         final Student student = this.students.get(position);
         holder.name.setText(student.getName());
-//        holder.telephone.setText(student.getLandline());
+        holder.telephone.setText(telephoneDAO.getFirstTelephoneFromStudent(student.getIdentifier()).getNumber());
     }
 
 

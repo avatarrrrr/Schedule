@@ -1,10 +1,14 @@
 package br.com.alura.schedule.models;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
@@ -13,13 +17,22 @@ import br.com.alura.schedule.models.enums.TelephoneType;
 @Entity
 public class Telephone implements Parcelable {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int identifier;
+    @ForeignKey(
+            entity = Student.class,
+            parentColumns = "identifier",
+            childColumns = "studentIdentifier",
+            onUpdate = CASCADE,
+            onDelete = CASCADE
+    )
+    private int studentIdentifier;
     private String number;
     private TelephoneType telephoneType;
 
     @Ignore
     protected Telephone(Parcel in) {
-        id = in.readInt();
+        identifier = in.readInt();
+        studentIdentifier = in.readInt();
         number = in.readString();
         telephoneType = (TelephoneType) in.readValue(TelephoneType.class.getClassLoader());
     }
@@ -39,12 +52,12 @@ public class Telephone implements Parcelable {
         }
     };
 
-    public int getId() {
-        return id;
+    public int getIdentifier() {
+        return identifier;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdentifier(int identifier) {
+        this.identifier = identifier;
     }
 
     public String getNumber() {
@@ -70,8 +83,17 @@ public class Telephone implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeInt(identifier);
+        dest.writeInt(studentIdentifier);
         dest.writeString(number);
         dest.writeValue(telephoneType);
+    }
+
+    public int getStudentIdentifier() {
+        return studentIdentifier;
+    }
+
+    public void setStudentIdentifier(int studentIdentifier) {
+        this.studentIdentifier = studentIdentifier;
     }
 }

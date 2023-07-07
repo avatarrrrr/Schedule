@@ -29,7 +29,7 @@ public class NewOrEditStudentFormActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_or_edit_student_form);
-        dao = ScheduleDatabase.getInstance(this).getDAO();
+        dao = ScheduleDatabase.getInstance(this).getStudentDAO();
         initializeViews();
     }
 
