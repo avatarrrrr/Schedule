@@ -13,7 +13,7 @@ import br.com.alura.schedule.models.Student;
 @Dao
 public interface RoomStudentDAO {
     @Insert
-    void save(Student avatar);
+    Long save(Student avatar);
 
     @Query("SELECT * FROM student")
     List<Student> getStudents();

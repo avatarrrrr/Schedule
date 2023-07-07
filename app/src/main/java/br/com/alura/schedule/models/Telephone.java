@@ -6,7 +6,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
@@ -51,6 +50,12 @@ public class Telephone implements Parcelable {
             return new Telephone[size];
         }
     };
+
+    public Telephone(int studentIdentifier, String number, TelephoneType type) {
+        this.studentIdentifier = studentIdentifier;
+        this.number = number;
+        this.telephoneType = type;
+    }
 
     public int getIdentifier() {
         return identifier;
