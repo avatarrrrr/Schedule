@@ -1,6 +1,6 @@
 package br.com.alura.schedule.ui.adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,23 +8,26 @@ import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 import br.com.alura.schedule.R;
-import br.com.alura.schedule.database.ScheduleDatabase;
+import br.com.alura.schedule.database.ScheduleDatabaseSingleton;
 import br.com.alura.schedule.database.dao.RoomTelephoneDAO;
 import br.com.alura.schedule.models.Student;
+import br.com.alura.schedule.services.ExecutorServiceSingleton;
 import br.com.alura.schedule.ui.adapter.viewholders.ViewHolder;
 
 public class StudentsListAdapter extends BaseAdapter {
 
-    final List<Student> students = new ArrayList<>();
-    final private Context context;
+    private final List<Student> students = new ArrayList<>();
+    private final Activity context;
+    private final RoomTelephoneDAO telephoneDAO;
+    private final ExecutorService executorMultiThread = ExecutorServiceSingleton.getInstance().getExecutorService();
 
-    final RoomTelephoneDAO telephoneDAO;
 
-    public StudentsListAdapter(Context context) {
+    public StudentsListAdapter(Activity context) {
         this.context = context;
-        telephoneDAO = ScheduleDatabase.getInstance(this.context).getTelephoneDAO();
+        telephoneDAO = ScheduleDatabaseSingleton.getInstance(this.context).getTelephoneDAO();
     }
 
     @Override
@@ -64,7 +67,10 @@ public class StudentsListAdapter extends BaseAdapter {
     private void assignStudentOnView(int position, ViewHolder holder) {
         final Student student = this.students.get(position);
         holder.name.setText(student.getName());
-        holder.telephone.setText(telephoneDAO.getFirstTelephoneFromStudent(student.getIdentifier()).getNumber());
+        executorMultiThread.execute(() -> {
+            final String number = telephoneDAO.getFirstTelephoneFromStudent(student.getIdentifier()).getNumber();
+            context.runOnUiThread(() -> holder.telephone.setText(number));
+        });
     }
 
 

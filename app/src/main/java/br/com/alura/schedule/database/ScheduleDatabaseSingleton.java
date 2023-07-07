@@ -18,13 +18,12 @@ import br.com.alura.schedule.models.Telephone;
 
 @Database(version = 6, entities = {Student.class, Telephone.class}, exportSchema = false)
 @TypeConverters({CalendarConverter.class, TelephoneTypeConverter.class})
-public abstract class ScheduleDatabase extends RoomDatabase {
-    private static ScheduleDatabase instance;
+public abstract class ScheduleDatabaseSingleton extends RoomDatabase {
+    private static ScheduleDatabaseSingleton instance;
 
-    public static ScheduleDatabase getInstance(Context context) {
+    public static ScheduleDatabaseSingleton getInstance(Context context) {
         if (instance == null) {
-            Builder<ScheduleDatabase> scheduleDatabaseBuilder = Room.databaseBuilder(context, ScheduleDatabase.class, context.getString(R.string.app_name) + ".db");
-            scheduleDatabaseBuilder.allowMainThreadQueries();
+            Builder<ScheduleDatabaseSingleton> scheduleDatabaseBuilder = Room.databaseBuilder(context, ScheduleDatabaseSingleton.class, context.getString(R.string.app_name) + ".db");
             scheduleDatabaseBuilder.addMigrations(Migrations.all);
             instance = scheduleDatabaseBuilder.build();
         }

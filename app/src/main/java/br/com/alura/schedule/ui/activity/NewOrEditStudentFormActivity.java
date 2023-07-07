@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
 
 import br.com.alura.schedule.R;
-import br.com.alura.schedule.database.ScheduleDatabase;
+import br.com.alura.schedule.database.ScheduleDatabaseSingleton;
 import br.com.alura.schedule.database.dao.RoomStudentDAO;
 import br.com.alura.schedule.database.dao.RoomTelephoneDAO;
 import br.com.alura.schedule.models.Student;
@@ -37,7 +37,7 @@ public class NewOrEditStudentFormActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_or_edit_student_form);
-        final ScheduleDatabase database = ScheduleDatabase.getInstance(this);
+        final ScheduleDatabaseSingleton database = ScheduleDatabaseSingleton.getInstance(this);
         roomStudentDAO = database.getStudentDAO();
         roomTelephoneDAO = database.getTelephoneDAO();
         initializeViews();
