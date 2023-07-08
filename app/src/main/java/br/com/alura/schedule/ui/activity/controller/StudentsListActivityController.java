@@ -75,7 +75,7 @@ public class StudentsListActivityController {
         context.registerForContextMenu(studentsView);
     }
 
-    private void setOnItemClickBehavior(ListView studentsView) {
+    private void setOnItemClickBehavior(@NonNull ListView studentsView) {
         studentsView.setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
             final Student student = (Student) parent.getItemAtPosition(position);
             goToFormsOnEditMode(student);
